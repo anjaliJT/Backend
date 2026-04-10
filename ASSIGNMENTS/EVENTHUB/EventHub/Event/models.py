@@ -11,6 +11,13 @@ user can
 situation to handle : 
 last available ticket book by two user at the same time.
 
+
+API : 
+
+GET all data /events/ List event 
+Get single data : /events/id event details 
+POST : /reservation/ Book Seats 
+Delete : /reservation/id 
 """
 
 
@@ -28,7 +35,7 @@ class Event( models.Model):
     status =  models.CharField(max_length=10,choices=Status_Choices, default="upcoming")
     created_at = models.DateTimeField(auto_now_add = True )
 
-    def __str___(self): 
+    def __str__(self): 
         return f"{self.title} at {self.venue}"
     
     class Meta: 
@@ -49,7 +56,7 @@ class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
 
     def __str__(self): 
-        return f"{self.attendee_name} = {self.event.title} ({self.seat_researved}) seats"
+        return f"{self.attendee_name} = {self.event.title} ({self.seats_reserved}) seats"
     
     class Meta:
         ordering = ['-created_at']
