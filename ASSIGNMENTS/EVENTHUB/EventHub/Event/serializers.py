@@ -12,6 +12,9 @@ from .models import Reservation, Event
 class EventSerializer(serializers.ModelSerializer): 
     # Two Custom Behaviours
     reservation_count = serializers.SerializerMethodField() 
+    available_seats = serializers.IntegerField(read_only=True)
+
+
     # Adds a read-only field to the API response
     # value is calculated dynamically(not stored in DB)
 
@@ -24,6 +27,11 @@ class EventSerializer(serializers.ModelSerializer):
     def get_reservation_count(self,obj):
         return obj.reservations.filter(status='confirmed').count()
     
+    # def get_available_seats(self,obj):
+    #     total_reserved = obj.reservations.filter(status='confirmed').aggregate(total=models.Sum('seats_reserved'))['total'] or 0
+    #     return obj.total_seats - total_reserved
+    
+
     def validate(self,data):
         if data.get('available-seats',0)> data.get('total_seats',0):
             raise serializers.ValidationError('avaiable_seats cannot exceed total  seats')

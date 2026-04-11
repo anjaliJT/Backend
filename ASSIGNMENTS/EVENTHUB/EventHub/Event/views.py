@@ -8,8 +8,12 @@ from rest_framework.views import APIView
 from django.db import transaction 
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+from django.db.models import Sum, Q, F
+from django.db.models.functions import Coalesce 
 # Create your views here.
 
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
 class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
 
@@ -24,7 +28,17 @@ class EventViewSet(viewsets.ModelViewSet):
         if venue_param:
             queryset = queryset.filter(venue__icontains=venue_param)
         
-        return queryset 
+        queryset =  queryset.annotate(reserved_seats=Coalesce(
+            Sum(
+                'reservations__seats_reserved',
+                filter=Q(reservations__status='confirmed'),                
+            ),
+            0
+        ), 
+        available_seats = F('total_seats') - F('reserved_seats')
+        ) 
+
+        return queryset
 
 # **ReservationViewSet — filter by event_id, custom cancel action**
 class ReservationViewSet(viewsets.ModelViewSet): 
@@ -47,7 +61,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
         if reservation.status == 'cancelled': 
             return Response({'error': 'Already cancelled.'}, status=400)
 
-        reservation.event.available_seats += reservation.seats_reserved 
+        # reservation.event.available_seats += reservation.seats_reserved 
 
         reservation.status = 'cancelled'
         reservation.save() 
@@ -79,7 +93,7 @@ class ReservationCreateAPIView(APIView):
             event = Event.objects.select_for_update().get(id=event_id)
             
             total_researved = sum(
-                event.reservations.filter(status='confirmed').values_list('seats_researved', flat=True))
+                event.reservations.filter(status='confirmed').values_list('seats_reserved', flat=True))
             
             available_seats = event.total_seats - total_researved
 
