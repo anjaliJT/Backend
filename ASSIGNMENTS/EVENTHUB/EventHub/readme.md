@@ -22,3 +22,29 @@ I prefer Generic view for standard CRUD  operations because they reduce boilerpl
 
 for scalable APIs, I use viewsets with routers to keep routing and logic clean.
 
+# Event Reservation API
+
+Django REST API for managing events and seat reservations with validation to prevent overbooking.
+
+---
+
+## Project Notes
+
+- Migrations are committed inside `events/migrations/`
+- Postman screenshots are available in the `screenshots/` directory
+
+---
+
+##  How to Run the Project
+
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+
+python -m venv venv
+venv\Scripts\activate   # (Windows)
+
+pip install -r requirements.txt
+
+python manage.py migrate
+python manage.py runserver
