@@ -2,15 +2,15 @@ from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 from django.urls import path
 from .views import (
-    EventListApiView, EventDetailAPIView, EventCreatAPIView,
-    ReservationListApiView, ReservationCreateAPIView 
-    , CancelReservationApiView,EventViewSet,ReservationViewSet)
+    EventViewSet,ReservationViewSet)
 
 router = DefaultRouter()
 router.register(r'events',       EventViewSet,       basename='event')
 
 router.register(r'reservations', ReservationViewSet, basename='reservation')
 urlpatterns = router.urls
+
+#---my own practic----
 # urlpatterns = [
     
 #     path('events/list', EventListApiView.as_view(), name='event-list'),
