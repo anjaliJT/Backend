@@ -12,9 +12,22 @@ class Company(models.Model):
         one_delete=models.CASCADE,
         related_name='company'
     )
-    company_name = modelsf.CharField(max_length=255)
+    company_name = models.CharField(max_length=255)
     api_key = models.CharField(max_length=64, unique=True, blank=True)
     role = models.CharField(max_length=10,choices=Role.choices,default=Role.CLIENT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class KBEntry(models.Model):
+    class Category(models.TextChoices):
+        API = 'api', 'API'
+        DATABASE = 'database', 'Database'
+        CLOUD = 'cloud', 'Cloud'
+        FRAMEWORK = 'framework', 'Framework'
+        GENERAL = 'general', 'General'
+
+    question = models.TextField()
+    answer = models.TextField()
+    category = models.CharField(max_length=20, choices=Category.choices)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
