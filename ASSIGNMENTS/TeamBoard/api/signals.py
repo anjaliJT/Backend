@@ -11,5 +11,5 @@ def create_company_profile(sender, instance, created, **kwargs):
         Company.objects.create(
             user = instance,
             company_name=instance.email,
-            api_key=secrets.token_urlsage(32)
+            api_key=secrets.token_urlsafe(32)
         )

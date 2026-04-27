@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import user
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Company(models.Model):
@@ -9,7 +9,7 @@ class Company(models.Model):
 
     user = models.OneToOneField(
         User, 
-        one_delete=models.CASCADE,
+        on_delete=models.CASCADE,
         related_name='company'
     )
     company_name = models.CharField(max_length=255)

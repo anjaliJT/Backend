@@ -1,7 +1,9 @@
 asgiref==3.11.1
-django==6.0.3
+Django
 djangorestframework==3.17.1
-djangorestframework-simplejwt==5.5.1
-pyjwt==2.12.1
+djangorestframework_simplejwt==5.5.1
+psycopg2==2.9.12
+PyJWT==2.12.1
 python-dotenv==1.2.2
 sqlparse==0.5.5
+tzdata==2026.2
