@@ -110,22 +110,6 @@ docker-compose up --build
 - DB credentials are set in `docker-compose.yml`
 - If you change DB credentials → reset volumes
 
-## Project Structure
-
-```
-project/
-│── api/
-│   ├── models.py
-│   ├── views.py
-│   ├── management/
-│   │   └── commands/
-│   │       └── seed_kb.py
-│
-│── Dockerfile
-│── docker-compose.yml
-│── requirements.txt
-│── manage.py
-```
 
 ## Done
 
